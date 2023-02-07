@@ -2,6 +2,7 @@ package com.badas.badasfood.listenter;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.EventListener;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import com.badas.badasfood.di.notificacao.NivelUrgencia;
@@ -12,13 +13,14 @@ import com.badas.badasfood.di.service.ClienteAtivadoEvent;
 @Component
 public class NotificacaoService {
 	
-	@Autowired
 	@TipoDoNotificador(NivelUrgencia.SEM_URGENCIA)
+	@Autowired
 	private Notificador notificador;
 	
 	@EventListener
+	@Order(1)
 	public void clienteAtivadoListener(ClienteAtivadoEvent event) {
-		System.out.println("Cliente " + event.getCliente().getNome() + " agora está ativo.");
-	}
+		notificador.notificar(event.getCliente(), "Seu cadastro agora está ativo");
 
+	}
 }
