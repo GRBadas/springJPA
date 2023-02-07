@@ -1,23 +1,20 @@
 package com.badas.badasfood.di.service;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;
 
 import com.badas.badasfood.di.modelo.Cliente;
-import com.badas.badasfood.di.notificacao.Notificador;
 
 @Component
 public class AtivacaoClienteService {
 	
-	@Qualifier("email")
 	@Autowired
-	private Notificador notificador;
-
+	private ApplicationEventPublisher eventPublisher;
+	
 	public void ativar(Cliente cliente) {
 		cliente.ativar();
+ // dizer ao container que o cliente está ativo
+		eventPublisher.publishEvent(new ClienteAtivadoEvent(cliente));
 
-		notificador.notificar(cliente, "Seu cadastro no sistema está ativo!");
 	}
-
 }
