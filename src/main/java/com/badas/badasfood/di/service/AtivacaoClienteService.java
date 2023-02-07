@@ -4,17 +4,19 @@ import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;
 
 import com.badas.badasfood.di.modelo.Cliente;
+import com.badas.badasfood.di.notificacao.NivelUrgencia;
+import com.badas.badasfood.di.notificacao.TipoDoNotificador;
 
 @Component
 public class AtivacaoClienteService {
 	
+	@TipoDoNotificador(NivelUrgencia.SEM_URGENCIA)
 	@Autowired
 	private ApplicationEventPublisher eventPublisher;
 	
 	public void ativar(Cliente cliente) {
 		cliente.ativar();
- // dizer ao container que o cliente está ativo
+		
 		eventPublisher.publishEvent(new ClienteAtivadoEvent(cliente));
-
 	}
 }

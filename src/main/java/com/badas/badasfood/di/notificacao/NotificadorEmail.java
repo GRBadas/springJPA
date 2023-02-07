@@ -1,10 +1,9 @@
 package com.badas.badasfood.di.notificacao;
-import org.springframework.context.annotation.Profile;
+
 import org.springframework.stereotype.Component;
 import com.badas.badasfood.di.modelo.Cliente;
 
-@Profile("prod")
-@TipoDoNotificador(NivelUrgencia.BAIXA_PRIORIDADE)
+@TipoDoNotificador(NivelUrgencia.SEM_URGENCIA)
 @Component
 public class NotificadorEmail implements Notificador {
 	
